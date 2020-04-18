@@ -1,0 +1,14 @@
+- Come up with a SICK repo name
+
+- Retrieve history
+  - Detect operating system
+  - Detect default browser
+  - Extract pages/titles/text (100 or custom)
+  - Delete doubles + same-domain clusters
+  - Parse url for search word
+
+- Make Spotify playlist
+  - Login with credentials
+  - Search per search word
+  - Add first song
+  - Check for doubles
