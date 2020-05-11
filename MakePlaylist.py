@@ -9,7 +9,7 @@ import googleapiclient.errors
 import requests
 
 #from exceptions import ResponseException
-from secret import spotify_token, spotify_user_id
+from secrets import spotify_token, spotify_user_id
 
 class CreatePlaylist:
     def __init__(self):
