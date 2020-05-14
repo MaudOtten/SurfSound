@@ -15,8 +15,8 @@
   - Parse url for search word
 
 - Make Spotify playlist
-  -[x] Login with credentials
-  -[x] Search per search word
-  -[x] Add first song
+  - [x] Login with credentials
+  - [x] Search per search word
+  - [x] Add first song
   - Check for doubles
   
