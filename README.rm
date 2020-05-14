@@ -8,7 +8,7 @@
   - Parse url for search word
 
 - Make Spotify playlist
-  - Login with credentials
-  - Search per search word
-  - Add first song
-  - Check for doubles
+  [x] Login with credentials -> DONE
+  [x] Search per search word -> DONE
+  [x] Add first song -> DONE
+  [x] Check for doubles

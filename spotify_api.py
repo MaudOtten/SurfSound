@@ -55,6 +55,7 @@ class CreatePlaylist:
         )
 
         response_json = response.json()
+        print(response_json)
         songs = response_json["tracks"]["items"]
 
         # only use the first song
@@ -72,6 +73,7 @@ class CreatePlaylist:
             )
 
         allplaylists = [info for playlist, info in response.json().items()]
+        print(allplaylists)
         idx = [names['id'] for names in allplaylists[1] if names['name'] == self.playlist_name]
 
         if not idx:
@@ -128,8 +130,9 @@ class CreatePlaylist:
         )
 
         # check for valid response status
-        if response.status_code != 200:
+        if response.status_code != (200 and 201):# or 201):
             raise Warning(response.status_code)
+
 
         response_json = response.json()
         return response_json
