@@ -40,11 +40,10 @@ class CreatePlaylist:
         # playlist id
         return response_json["id"]
 
-    def get_spotify_uri(self, song_name, artist):
+    def get_spotify_uri(self, song_name):
         """Search For the Song"""
-        query = "https://api.spotify.com/v1/search?query=track%3A{}+artist%3A{}&type=track&offset=0&limit=20".format(
-        song_name,
-        artist
+        query = "https://api.spotify.com/v1/search?query=track%3A{}&type=track&offset=0&limit=20".format(
+        song_name
         )
         response = requests.get(
         query,
@@ -55,13 +54,16 @@ class CreatePlaylist:
         )
 
         response_json = response.json()
-        print(response_json)
+
         songs = response_json["tracks"]["items"]
 
-        # only use the first song
-        uri = songs[0]["uri"]
-
-        return uri
+        if response_json["tracks"]["items"] != []:
+            songs = response_json["tracks"]["items"]
+            # only use the first song, return uri
+            return songs[0]["uri"]
+        else:
+            # else return null
+            return 0
 
     def check_playlist(self):
         response = requests.get(
@@ -90,30 +92,25 @@ class CreatePlaylist:
         # populate dictionary with our liked songs
         #self.get_liked_videos()
 
-        self.all_song_info['Song1'] = {
-            "youtube_url": 'https://www.youtube.com/watch?v=IRDMInkkw7U',
-            "song_name": 'Bitches',
-            "artist": 'Tove Lo',
-            "spotify_uri": self.get_spotify_uri('Bitches', 'Tove Lo')
-            }
+        keywords = ['anananaanan', 'postnord', 'Like', 'What the fuck', 'good as hell', 'cute cats']
 
-        self.all_song_info['Song2'] = {
-            "youtube_url": 'https://www.youtube.com/watch?v=_Yhyp-_hX2s',
-            "song_name": 'Lose Yourself',
-            "artist": 'Eminem',
-            "spotify_uri": self.get_spotify_uri('Lose Yourself', 'Eminem')
-            }
-
-
-        # collect all of uri
-        uris = [info["spotify_uri"]
-            for song, info in self.all_song_info.items()]
+        urs = [self.get_spotify_uri(keyword) for keyword in keywords]
+        uris = [i for i in urs if i is not 0]
 
         # create a new playlist
         playlist_exists, playlist_id = self.check_playlist()
 
         if not playlist_exists:
             playlist_id = self.create_playlist()
+        else:
+            response = requests.get(
+                'https://api.spotify.com/v1/playlists/{}/tracks'.format(playlist_id),
+                headers={
+                "Content-Type": "application/json",
+                "Authorization": "Bearer {}".format(spotify_token)
+                }
+                )
+            print(response.json().items())
 
         # add all songs into new playlist
         request_data = json.dumps(uris)
