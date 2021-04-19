@@ -1,5 +1,3 @@
-- Come up with a SICK repo name
-
 - Retrieve history
   - Detect operating system
   - Detect default browser
